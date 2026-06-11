@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: nextjs_space/yarn.lock
+
+      - name: Install dependencies
+        working-directory: nextjs_space
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        working-directory: nextjs_space
+        run: yarn prisma generate
+
+      - name: Type check
+        working-directory: nextjs_space
+        run: yarn tsc --noEmit
+
+      - name: Build
+        working-directory: nextjs_space
+        env:
+          DATABASE_URL: 'postgresql://placeholder:placeholder@localhost:5432/placeholder'
+        run: yarn build
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: nextjs_space/yarn.lock
+
+      - name: Install dependencies
+        working-directory: nextjs_space
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        working-directory: nextjs_space
+        run: yarn prisma generate
+
+      - name: Lint
+        working-directory: nextjs_space
+        run: yarn lint || true

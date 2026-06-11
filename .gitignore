@@ -1,0 +1,54 @@
+# Dependencies
+**/node_modules
+
+# Build outputs
+.next
+.build
+.cache
+dist
+target
+out
+
+# Deployment
+.deploy
+.logs
+
+# Environment variables (NEVER commit secrets)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Yarn
+**/.yarn/
+!**/.yarn/patches
+!**/.yarn/plugins
+!**/.yarn/releases
+!**/.yarn/sdks
+!**/.yarn/versions
+!**/.yarn/cache
+**/.yarn/build-state.yml
+**/.yarn/install-state.gz
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+*.nfs*
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Abacus internal
+.abacus.donotdelete
+.project_instructions.md
+
+# Auto-generated docs (PDF/DOCX from markdown)
+*.pdf
+*.docx
+!nextjs_space/public/**/*.pdf
